@@ -1,0 +1,22 @@
+﻿@model IEnumerable<UserManagement.Core.Models.Permission>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permission in Model)
+        {
+            <tr>
+                <td>@permission.Name</td>
+                <td>
+                    <button class="btn btn-primary" onclick="editPermission(@permission.PermissionId)">Edit</button>
+                    <button class="btn btn-danger" onclick="deletePermission(@permission.PermissionId)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

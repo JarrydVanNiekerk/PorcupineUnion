@@ -1,0 +1,24 @@
+﻿@model IEnumerable<UserManagement.Core.Models.Permission>
+
+<h4>Select Permissions</h4>
+@foreach (var permission in Model)
+{
+    <div>
+        <input type="checkbox" name="selectedPermissions" id="perm_@permission.PermissionId" value="@permission.PermissionId" onchange="updatePermissionsList(this)" /> @permission.Name
+    </div>
+}
+<script>
+    function updatePermissionsList(checkbox) {
+        var permId = parseInt(checkbox.value);
+        if (checkbox.checked) {
+            
+            if (!window.ListOfPerms.includes(permId)) {
+                window.ListOfPerms.push(permId);
+            }
+        } else {
+            
+            window.ListOfPerms = window.ListOfPerms.filter(id => id !== permId);
+        }
+        console.log(window.ListOfPerms); 
+    }
+</script>

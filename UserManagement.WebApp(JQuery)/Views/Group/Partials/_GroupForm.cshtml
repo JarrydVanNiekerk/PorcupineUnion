@@ -1,0 +1,102 @@
+﻿@model UserManagement.Core.Models.Group
+
+<form id="groupForm">
+    <input type="hidden" asp-for="GroupId" />
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div id="permissionsContainer">
+        <h4>Permissions</h4>
+        @foreach(var gp in Model.GroupPermissions)
+        {
+            <div>@gp.Permission.Name</div>
+        }
+        <button type="button" onclick="addPermission(@Model.GroupId)">Add Permission</button>
+    </div>
+    <div id="permissionsContainer">
+        <!-- Permissions will be loaded here -->
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+
+
+<script>
+    $(document).ready(function () {
+        // Check if window.isEdit is true
+        if (window.isEdit !== true) {
+            // If not true, hide the permissions section
+            $('div#permissionsContainer').hide();
+            $('div#permissionsSection').hide();
+        }
+    });
+    $(function () {
+        $('#groupForm').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var selectedPermissions = $('input[name="selectedPermissions"]:checked').map(function () {
+                return parseInt($(this).val(), 10);
+            }).get();
+
+            selectedPermissions.forEach(function (permId) {
+                formData.append('permissionIds', permId);
+            });
+
+            var postUrl = $('#GroupId').val() > 0 ? '@Url.Action("EditGroup", "Group")' : '@Url.Action("CreateGroup", "Group")';
+            $.ajax({
+                url: postUrl,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#groupModal').modal('hide');
+                    location.reload(); 
+                },
+                error: function () {
+                    alert('Failed to save group with permissions.');
+                }
+            });
+        });
+    });
+    function addPermission(groupId) {
+        
+        var url = '@Url.Action("GetAvailablePermissions", "Permission")';
+        $.get(url, function (data) {
+            $('#permissionsContainer').html(data); 
+        }).fail(function () {
+            alert('Failed to load available permissions.');
+        });
+    }
+
+    // function submitSelectedPermissions() {
+    //     // Collect all selected permissions
+    //     var selectedIds = $('input[name="selectedPermissions"]:checked').map(function () {
+    //         return $(this).val();
+    //     }).get();
+
+    //     // Send the selected permissions to the server
+    //     var submitUrl = '@Url.Action("AddPermissionsToGroup", "Group")'; // Adjust URL as needed
+    //     $.post(submitUrl, { permissions: selectedIds }, function () {
+    //         // Update the UI or refresh
+    //         location.reload(); // Refresh to show new permissions in the group
+    //     }).fail(function () {
+    //         alert('Failed to add permissions.');
+    //     });
+    // }
+
+    function removePermission(groupId, permissionId) {
+        var deleteUrl = `@Url.Action("RemovePermissionFromGroup", "Group")/${groupId}/${permissionId}`;
+        $.post(deleteUrl, function () {
+            
+            location.reload();
+        }).fail(function () {
+            alert("Error removing permission.");
+        });
+    }
+
+
+
+
+</script>

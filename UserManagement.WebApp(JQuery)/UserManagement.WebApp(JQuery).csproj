@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>UserManagement.WebApp_JQuery_</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\UserGroup\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserManagement.Core\UserManagement.Core.csproj" />
+  </ItemGroup>
+
+</Project>

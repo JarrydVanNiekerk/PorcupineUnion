@@ -1,0 +1,22 @@
+﻿@model IEnumerable<UserManagement.Core.Models.Group>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td>@group.Name</td>
+                <td>
+                    <button class="btn btn-primary" onclick="editGroup(@group.GroupId)">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteGroup(@group.GroupId)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

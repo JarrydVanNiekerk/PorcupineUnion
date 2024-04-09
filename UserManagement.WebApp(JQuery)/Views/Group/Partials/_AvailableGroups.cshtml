@@ -1,0 +1,9 @@
+﻿@model IEnumerable<UserManagement.Core.Models.Group>
+
+<h4>Select Groups</h4>
+@foreach (var group in Model)
+{
+    <div>
+        <input type="checkbox" name="selectedGroups" value="@group.GroupId" /> @group.Name
+    </div>
+}

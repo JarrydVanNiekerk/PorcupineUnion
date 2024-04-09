@@ -1,0 +1,29 @@
+﻿@model UserManagement.Core.Models.Permission
+
+<form id="permissionForm">
+    <input type="hidden" asp-for="PermissionId" />
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+<script>
+    $(function () {
+        $('#permissionForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            var postUrl = '@Url.Action("CreatePermission", "Permission")';
+            if ($('#PermissionId').val() > 0) {
+                postUrl = '@Url.Action("EditPermission", "Permission")';
+            }
+            $.post(postUrl, formData, function (data) {
+                $('#permissionModal').modal('hide');
+                location.reload(); 
+            }).fail(function () {
+                alert('Failed to save permission.');
+            });
+        });
+    });
+</script>

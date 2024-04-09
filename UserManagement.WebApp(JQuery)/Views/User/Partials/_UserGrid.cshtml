@@ -1,0 +1,36 @@
+﻿@model IEnumerable<UserManagement.Core.Models.User>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>
+                    <button class="btn btn-primary" onclick="editUser(@user.UserId)">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteUser(@user.UserId)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    // function editUser(userId) {
+    //     
+    //     $('#userModal').modal('show');
+    // }
+
+    // function deleteUser(userId) {
+    //     if (confirm("Are you sure you want to delete this user?")) {
+    //         
+    //         location.href = '/User/DeleteUser/' + userId;
+    //     }
+    // }
+
+</script>
